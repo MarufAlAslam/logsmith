@@ -1,2 +1,2 @@
-const fs = require('fs');
-fs.appendFileSync('log.txt', `Updated at: ${new Date().toISOString()}\n`);
+import { appendFileSync } from 'fs';
+appendFileSync('log.txt', `Updated at: ${new Date().toISOString()}\n`);
