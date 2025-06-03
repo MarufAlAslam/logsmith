@@ -1,0 +1,28 @@
+name: Auto Commit
+
+on:
+  schedule:
+    - cron: '0 * * * *' # every hour
+  workflow_dispatch: # allows manual run from GitHub UI
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Run update script
+        run: |
+          echo "Auto update at $(date)" >> log.txt
+
+      - name: Set Git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "🤖 Auto update: $(date)" || echo "No changes to commit"
+          git push
